@@ -1,5 +1,5 @@
 {
-  "name": "usefetch",
+  "name": "usefetch-manager-js",
   "version": "1.0.0",
   "description": "`useFetch` es un hook de React que simplifica la realización de peticiones a APIs en tus componentes. Maneja tareas comunes como establecer estados de carga, administrar configuraciones de axios y el manejo de errores.",
   "main": "src/index.js",
