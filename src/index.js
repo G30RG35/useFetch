@@ -1,8 +1,26 @@
-import axios from "axios";
 import { useState } from "react";
 
 function useFetch() {
   const [loadingFetch, setLoadingFetch] = useState(false);
+
+  const createAxiosRequest = (method) => async ({ axiosClient, params, data, url, headers }) => {
+    const requestData = data || (params ? { params } : undefined);
+
+    try {
+      setLoadingFetch(true);
+      const response = await axiosClient[method](url, requestData, headers);
+
+      if (response.status === 200) {
+        return response;
+      } else {
+        throw new Error(`Request failed with status: ${response.status}`);
+      }
+    } catch (error) {
+      throw new Error(`Request failed: ${error.message}`);
+    } finally {
+      setLoadingFetch(false);
+    }
+  };
 
   const makeRequest = async (method, url, data, headers) => {
     const requestData = data || undefined;
@@ -23,10 +41,11 @@ function useFetch() {
     }
   };
 
-  const putRequest = (axiosClient) => createAxiosRequest('put', axiosClient);
-  const getRequest = (axiosClient) => createAxiosRequest('get', axiosClient);
-  const deleteRequest = (axiosClient) => createAxiosRequest('delete', axiosClient);
-  const postRequest = (axiosClient) => createAxiosRequest('post', axiosClient);
+
+  const putRequest = createAxiosRequest('put');
+  const getRequest = createAxiosRequest('get');
+  const deleteRequest = createAxiosRequest('delete');
+  const postRequest = createAxiosRequest('post');
 
   return {
     makeRequest,
