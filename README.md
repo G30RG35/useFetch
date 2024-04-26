@@ -4,27 +4,30 @@
 
 ## Instalación
 
-Este hook asume que tienes `useState` de React y `useAxiosConfig` de un archivo auxiliar separado (no incluido aquí).
+Este hook asume que tienes `useState` de React y `axios` instalado.
 
 ## Explicación
 
 `useFetch` proporciona dos funciones:
 
 - `makeRequest`: Esta función toma un objeto con opciones de configuración para tu petición a la API.
+
+- `getRequest`: Esta función por defecto es _get_, la funcion toma un objeto con opciones de configuración para tu petició utilizando la instancia de axios.
+- `postRequest`: Esta función por defecto es _post_, la funcion toma un objeto con opciones de configuración para tu petició utilizando la instancia de axios.
+- `putRequest`: Esta función por defecto es _put_, la funcion toma un objeto con opciones de configuración para tu petició utilizando la instancia de axios.
+- `deleteRequest`: Esta función por defecto es _delete_, la funcion toma un objeto con opciones de configuración para tu petició utilizando la instancia de axios.
+
 - `loadingFetch`: Esta variable de estado indica si se está realizando una petición actualmente.
 
 `makeRequest` acepta las siguientes opciones:
 
 - `method`: Método HTTP (GET, POST, PUT, etc.).
-- `isAuth` (opcional): Booleano que indica si la petición requiere autenticación (por defecto es true).
-- `params` (opcional): Objeto que contiene parámetros de consulta para peticiones GET.
-- `data` (opcional): Objeto que contiene datos para peticiones POST, PUT o PATCH.
 - `url`: URL del punto final de la API.
+- `data` (opcional): Objeto que contiene datos para peticiones POST, PUT o PATCH.
 - `headers` (opcional): Cabeceras adicionales para la petición.
 
 `makeRequest` maneja:
 
-- Seleccionar la instancia axios apropiada (autenticada o no autenticada) basada en el indicador `isAuth`.
 - Establecer el estado de carga antes y después de la petición.
 - Registrar los parámetros de la petición para depurar.
 - Manejo básico de errores con mensajes específicos para códigos de error comunes (400, 415, 500).
