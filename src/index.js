@@ -1,14 +1,15 @@
+import axios from "axios";
 import { useState } from "react";
 
 function useFetch() {
   const [loadingFetch, setLoadingFetch] = useState(false);
 
-  const createAxiosRequest = (method) => async ({ axiosClient, params, data, url, headers }) => {
-    const requestData = data || (params ? { params } : undefined);
+  const makeRequest = async (method, url, data, headers) => {
+    const requestData = data || undefined;
 
     try {
       setLoadingFetch(true);
-      const response = await axiosClient[method](url, requestData, headers);
+      const response = await axios[method](url, requestData, { headers });
 
       if (response.status === 200) {
         return response;
@@ -22,14 +23,13 @@ function useFetch() {
     }
   };
 
-  // const makeRequest = createAxiosRequest('get');
-  const putRequest = createAxiosRequest('put');
-  const getRequest = createAxiosRequest('get');
-  const deleteRequest = createAxiosRequest('delete');
-  const postRequest = createAxiosRequest('post');
+  const putRequest = (axiosClient) => createAxiosRequest('put', axiosClient);
+  const getRequest = (axiosClient) => createAxiosRequest('get', axiosClient);
+  const deleteRequest = (axiosClient) => createAxiosRequest('delete', axiosClient);
+  const postRequest = (axiosClient) => createAxiosRequest('post', axiosClient);
 
   return {
-    // makeRequest,
+    makeRequest,
     putRequest,
     getRequest,
     deleteRequest,
