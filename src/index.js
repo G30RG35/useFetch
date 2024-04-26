@@ -1,12 +1,9 @@
 import { useState } from "react";
-import { useAxiosConfig } from "../helpers";
 
 function useFetch() {
-  const { axiosAuth, axios } = useAxiosConfig();
   const [loadingFetch, setLoadingFetch] = useState(false);
 
-  const createAxiosRequest = (method) => async ({ isAuth, params, data, url, headers }) => {
-    const axiosClient = isAuth ? axiosAuth : axios;
+  const createAxiosRequest = (method) => async ({ axiosClient, params, data, url, headers }) => {
     const requestData = data || (params ? { params } : undefined);
 
     try {
