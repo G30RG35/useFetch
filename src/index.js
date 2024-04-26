@@ -11,7 +11,7 @@ function useFetch() {
       const response = await axiosClient[method](url, requestData, headers);
 
       if (response.status === 200) {
-        return response.data;
+        return response;
       } else {
         throw new Error(`Request failed with status: ${response.status}`);
       }
@@ -22,14 +22,14 @@ function useFetch() {
     }
   };
 
-  const makeRequest = createAxiosRequest('get');
+  // const makeRequest = createAxiosRequest('get');
   const putRequest = createAxiosRequest('put');
   const getRequest = createAxiosRequest('get');
   const deleteRequest = createAxiosRequest('delete');
   const postRequest = createAxiosRequest('post');
 
   return {
-    makeRequest,
+    // makeRequest,
     putRequest,
     getRequest,
     deleteRequest,
